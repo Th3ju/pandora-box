@@ -46,12 +46,12 @@ su - $SUDO_USER -c "poetry --version"
 #---------------------
 apt install -y build-essential tcl pkg-config
 
-if [ ! -d "valkey" ];
-    then
-        git clone https://github.com/valkey-io/valkey.git
-        cd valkey
-        git checkout 8.0
-        make -j 4
+if [ ! -d "valkey" ]; then
+    git clone https://github.com/valkey-io/valkey.git
+    cd valkey
+    git checkout 8.0
+    make -j 4
+    cd ..
 fi
 # Optionally, you can run the tests:
 # make test
@@ -64,25 +64,22 @@ chown -R $SUDO_USER valkey
 apt-get update
 apt install -y git gcc g++ make cmake autoconf automake libtool python3 libssl-dev
 
-if [ ! -d "kvrocks" ];
-    then
-        git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
-        cd kvrocks
-        git checkout 2.10
-        ./x.py build
+if [ ! -d "kvrocks" ]; then
+    git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
+    cd kvrocks
+    git checkout 2.10
+    ./x.py build
+    cd ..
 fi
-
-cd ..
 
 chown -R $SUDO_USER kvrocks
 
 #---------------------
 # Pandora
 #---------------------
-if [ ! -d "pandora" ];
-    then
-        git clone https://github.com/pandora-analysis/pandora.git
-        chown -R $SUDO_USER pandora
+if [ ! -d "pandora" ]; then
+    git clone https://github.com/pandora-analysis/pandora.git
+    chown -R $SUDO_USER pandora
 fi
 
 # fix broken packages

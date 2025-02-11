@@ -46,10 +46,8 @@ su - $SUDO_USER -c "poetry --version"
 #---------------------
 apt install -y build-essential tcl pkg-config
 
-if [ -d "valkey" ];
+if [ ! -d "valkey" ];
     then
-        cd valkey
-    else
         git clone https://github.com/valkey-io/valkey.git
         cd valkey
         git checkout 8.0
@@ -57,7 +55,6 @@ if [ -d "valkey" ];
 fi
 # Optionally, you can run the tests:
 # make test
-cd ..
 
 chown -R $SUDO_USER valkey
 
@@ -67,10 +64,8 @@ chown -R $SUDO_USER valkey
 apt-get update
 apt install -y git gcc g++ make cmake autoconf automake libtool python3 libssl-dev
 
-if [ -d "kvrocks" ];
+if [ ! -d "kvrocks" ];
     then
-        cd kvrocks
-    else
         git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
         cd kvrocks
         git checkout 2.10

@@ -84,14 +84,14 @@ fi
 apt-get install --fix-broken -y
 
 # install packages
-sudo apt install python3-dev  # for compiling things
-sudo apt install libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0  # For HTML -> PDF
-sudo apt install libreoffice-nogui # For Office -> PDF
-sudo apt install exiftool  # for extracting exif information
-sudo apt install unrar  # for extracting rar files
-sudo apt install libxml2-dev libxslt1-dev antiword unrtf poppler-utils tesseract-ocr flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig  # for textract
-sudo apt install libssl-dev  # seems required for yara-python
-sudo apt install libcairo2-dev  # Required by reportlab
+apt install -y python3-dev  # for compiling things
+apt install -y libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0  # For HTML -> PDF
+apt install -y libreoffice-nogui # For Office -> PDF
+apt install -y exiftool  # for extracting exif information
+apt install -y unrar  # for extracting rar files
+apt install -y libxml2-dev libxslt1-dev antiword unrtf poppler-utils tesseract-ocr flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig  # for textract
+apt install -y libssl-dev  # seems required for yara-python
+apt install -y libcairo2-dev  # Required by reportlab
 
 apt install -y rsyslog cron # log logging
 

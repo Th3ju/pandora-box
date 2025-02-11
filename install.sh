@@ -48,15 +48,14 @@ apt install -y build-essential tcl pkg-config
 
 if [ ! -d "valkey" ]; then
     git clone https://github.com/valkey-io/valkey.git
+    chown -R $SUDO_USER valkey
     cd valkey
     git checkout 8.0
     make -j 4
+    # Optionally, you can run the tests:
+    # make test
     cd ..
 fi
-# Optionally, you can run the tests:
-# make test
-
-chown -R $SUDO_USER valkey
 
 #---------------------
 # Kvrocks
@@ -66,13 +65,12 @@ apt install -y git gcc g++ make cmake autoconf automake libtool python3 libssl-d
 
 if [ ! -d "kvrocks" ]; then
     git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
+    chown -R $SUDO_USER kvrocks
     cd kvrocks
     git checkout 2.10
     ./x.py build
     cd ..
 fi
-
-chown -R $SUDO_USER kvrocks
 
 #---------------------
 # Pandora

@@ -109,7 +109,7 @@ su - $SUDO_USER -c "cd ~/pandora; cp config/generic.json.sample config/generic.j
 su - $SUDO_USER -c "cp ~/pandora/config/logging.json.sample ~/pandora/config/logging.json"
 
 # install yara-python
-apt install python3-yara
+apt install -y python3-yara
 
 # ClamAV
 apt-get install -y hdparm clamav-daemon

@@ -164,7 +164,7 @@ echo '0 20 * * * /sbin/poweroff' >> /etc/crontab
 cd /home/$SUDO_USER/pandora-box
 
 # Install pipx
-su - $SUDO_USER -c "apt install -y pipx"
+apt install -y pipx
 
 # Python libraries
 su - $SUDO_USER -c "pipx install pypandora"

@@ -163,8 +163,9 @@ echo '0 20 * * * /sbin/poweroff' >> /etc/crontab
 #---------------------
 cd /home/$SUDO_USER/pandora-box
 
-# Install pipx
-apt install -y pipx
+# FIM, pmount, psmisc (for killall), vim and pipx
+apt --fix-broken install -y
+apt install -y fim pmount psmisc vim pipx
 
 # Python libraries
 su - $SUDO_USER -c "pipx install pypandora"
@@ -183,10 +184,6 @@ fi
 # Quarantine folder
 mkdir -p /var/quarantine
 chown $SUDO_USER /var/quarantine
-
-# FIM, pmount, psmisc (for killall) and vim
-apt --fix-broken install -y
-apt install -y fim pmount psmisc vim
 
 # Suppress all messages from the kernel (and its drivers) except panic messages from appearing on the console.
 echo "kernel.printk = 3 4 1 3" | tee -a /etc/sysctl.conf

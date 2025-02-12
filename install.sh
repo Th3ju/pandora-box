@@ -167,7 +167,9 @@ cd /home/$SUDO_USER/pandora-box
 su - $SUDO_USER -c "apt install -y pipx"
 
 # Python libraries
-su - $SUDO_USER -c "pipx install pypandora psutil pyudev"
+su - $SUDO_USER -c "pipx install pypandora"
+su - $SUDO_USER -c "pipx install psutil"
+su - $SUDO_USER -c "pipx install pyudev"
 
 # create /media/box folder
 if [ ! -d "/media/box" ];

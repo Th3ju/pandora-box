@@ -165,12 +165,10 @@ cd /home/$SUDO_USER/pandora-box
 
 # FIM, pmount, psmisc (for killall), vim and pipx
 apt --fix-broken install -y
-apt install -y fim pmount psmisc vim pipx
+apt install -y fim pmount psmisc vim pipx python3-psutil python3-pyudev
 
 # Python libraries
 su - $SUDO_USER -c "pipx install pypandora"
-su - $SUDO_USER -c "pipx install psutil"
-su - $SUDO_USER -c "pipx install pyudev"
 
 # create /media/box folder
 if [ ! -d "/media/box" ];

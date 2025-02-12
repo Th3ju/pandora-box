@@ -163,8 +163,11 @@ echo '0 20 * * * /sbin/poweroff' >> /etc/crontab
 #---------------------
 cd /home/$SUDO_USER/pandora-box
 
+# Install pipx
+su - $SUDO_USER -c "apt install -y pipx"
+
 # Python libraries
-su - $SUDO_USER -c "pip install pypandora psutil pyudev"
+su - $SUDO_USER -c "pipx install pypandora psutil pyudev"
 
 # create /media/box folder
 if [ ! -d "/media/box" ];

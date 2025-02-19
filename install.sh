@@ -32,7 +32,7 @@ apt remove -y needrestart
 # Python
 #---------------------
 apt update && apt upgrade -y
-apt install -y python-is-python3 python3-pip
+apt install -y python-is-python3 python3-pip python3-venv
 apt install -y libssl-dev
 
 su - $SUDO_USER -c "python -m venv /home/$SUDO_USER/.local"

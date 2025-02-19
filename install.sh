@@ -46,20 +46,16 @@ su - $SUDO_USER -c "poetry --version"
 #---------------------
 apt install -y build-essential tcl pkg-config
 
-if [ -d "valkey" ];
-    then
-        cd valkey
-    else
-        git clone https://github.com/valkey-io/valkey.git
-        cd valkey
-        git checkout 8.0
-        make -j 4
+if [ ! -d "valkey" ]; then
+    git clone https://github.com/valkey-io/valkey.git
+    cd valkey
+    git checkout 8.0
+    make -j 4
+    # Optionally, you can run the tests:
+    # make test
+    cd ..
+    chown -R $SUDO_USER valkey
 fi
-# Optionally, you can run the tests:
-# make test
-cd ..
-
-chown -R $SUDO_USER valkey
 
 #---------------------
 # Kvrocks
@@ -67,27 +63,21 @@ chown -R $SUDO_USER valkey
 apt-get update
 apt install -y git gcc g++ make cmake autoconf automake libtool python3 libssl-dev
 
-if [ -d "kvrocks" ];
-    then
-        cd kvrocks
-    else
-        git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
-        cd kvrocks
-        git checkout 2.10
-        ./x.py build
+if [ ! -d "kvrocks" ]; then
+    git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
+    cd kvrocks
+    git checkout 2.10
+    ./x.py build
+    cd ..
+    chown -R $SUDO_USER kvrocks
 fi
-
-cd ..
-
-chown -R $SUDO_USER kvrocks
 
 #---------------------
 # Pandora
 #---------------------
-if [ ! -d "pandora" ];
-    then
-        git clone https://github.com/pandora-analysis/pandora.git
-        chown -R $SUDO_USER pandora
+if [ ! -d "pandora" ]; then
+    git clone https://github.com/pandora-analysis/pandora.git
+    chown -R $SUDO_USER pandora
 fi
 
 # fix broken packages
@@ -99,7 +89,7 @@ apt install -y libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0  # For HTML -> PDF
 apt install -y libreoffice-nogui # For Office -> PDF
 apt install -y exiftool  # for extracting exif information
 apt install -y unrar  # for extracting rar files
-apt install -y libxml2-dev libxslt1-dev antiword unrtf poppler-utils pstotext tesseract-ocr flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig  # for textract
+apt install -y libxml2-dev libxslt1-dev antiword unrtf poppler-utils tesseract-ocr flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig  # for textract
 apt install -y libssl-dev  # seems required for yara-python
 apt install -y libcairo2-dev  # Required by reportlab
 
@@ -119,7 +109,7 @@ su - $SUDO_USER -c "cd ~/pandora; cp config/generic.json.sample config/generic.j
 su - $SUDO_USER -c "cp ~/pandora/config/logging.json.sample ~/pandora/config/logging.json"
 
 # install yara-python
-su - $SUDO_USER -c "pip install yara-python"
+apt install -y python3-yara
 
 # ClamAV
 apt-get install -y hdparm clamav-daemon
@@ -173,8 +163,14 @@ echo '0 20 * * * /sbin/poweroff' >> /etc/crontab
 #---------------------
 cd /home/$SUDO_USER/pandora-box
 
+# FIM, pmount, psmisc (for killall), vim and pipx
+apt --fix-broken install -y
+apt install -y fim pmount psmisc vim
+
 # Python libraries
-su - $SUDO_USER -c "pip install pypandora psutil pyudev"
+su - $SUDO_USER -c "python3 -m venv /home/$SUDO_USER/python"
+su - $SUDO_USER -c "python3/bin/pip install pypandora psutil pyudev"
+
 
 # create /media/box folder
 if [ ! -d "/media/box" ];
@@ -188,10 +184,6 @@ fi
 # Quarantine folder
 mkdir -p /var/quarantine
 chown $SUDO_USER /var/quarantine
-
-# FIM, pmount, psmisc (for killall) and vim
-apt --fix-broken install -y
-apt install -y fim pmount psmisc vim
 
 # Suppress all messages from the kernel (and its drivers) except panic messages from appearing on the console.
 echo "kernel.printk = 3 4 1 3" | tee -a /etc/sysctl.conf
@@ -253,8 +245,8 @@ echo "ExecStart=-/sbin/agetty --autologin pandora --noclear %I $TERM" >> /etc/sy
 # echo "ExecStart=-su - pandora -c ./pandora-box/pandora-box.py" >> /etc/systemd/system/getty@tty1.service.d/override.conf
 
 # Start pandora from bashrc
-echo "export PATH=\"\$HOME/.local/bin:{\$PATH}\"" >> /home/$SUDO_USER/.bashrc
-echo "exec pandora-box/pandora-box.py" >> /home/$SUDO_USER/.bashrc
+echo "PATH=\"\$HOME/python/bin:\$PATH\"" >> /home/$SUDO_USER/.profile
+#echo "exec python3 pandora-box/pandora-box.py" >> /home/$SUDO_USER/.bashrc
 
 # Copy ini file
 su - $SUDO_USER -c "cp ~/pandora-box/pandora-box.ini.curses ~/pandora-box/pandora-box.ini"

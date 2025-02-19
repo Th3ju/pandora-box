@@ -240,11 +240,8 @@ echo "mesg n" >> /home/$SUDO_USER/.bashrc
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 echo "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf
 echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-echo "ExecStart=-/sbin/agetty --autologin pandora --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-# echo "ExecStart=-su - pandora -c ./pandora-box/pandora-box.py" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-
-# Start pandora from bashrc
-# echo "PATH=\"\$HOME/python/bin:\$PATH\"" >> /home/$SUDO_USER/.profile
+echo "ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo "ExecStart=-su - $SUDO_USER -c ./pandora-box/pandora-box.py" >> /etc/systemd/system/getty@tty1.service.d/override.conf
 
 # Copy ini file
 su - $SUDO_USER -c "cp ~/pandora-box/pandora-box.ini.curses ~/pandora-box/pandora-box.ini"

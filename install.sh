@@ -163,9 +163,9 @@ echo '0 20 * * * /sbin/poweroff' >> /etc/crontab
 #---------------------
 cd /home/$SUDO_USER/pandora-box
 
-# FIM, pmount, psmisc (for killall), vim and pipx
+# FIM, puthon3-venv pmount, psmisc (for killall) and vim
 apt --fix-broken install -y
-apt install -y fim pmount psmisc vim
+apt install -y fim python3-venv pmount psmisc vim 
 
 # Python libraries
 su - $SUDO_USER -c "python -m venv /home/$SUDO_USER/.local"

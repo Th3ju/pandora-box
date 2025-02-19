@@ -581,7 +581,6 @@ def scan():
 
 # --------------------------------------
 
-
 def wait():
     """Wait for insert of remove of USB device"""
     # handle error - first unmount the device

@@ -35,11 +35,14 @@ apt update && apt upgrade -y
 apt install -y python-is-python3 python3-pip
 apt install -y libssl-dev
 
+su - $SUDO_USER -c "python -m venv /home/$SUDO_USER/.local"
+
 #---------------------
-# Peotry
+# Poetry
 #---------------------
-su - $SUDO_USER -c "curl -sSL https://install.python-poetry.org | python3 -"
-su - $SUDO_USER -c "poetry --version"
+# su - $SUDO_USER -c "curl -sSL https://install.python-poetry.org | python3 -"
+# su - $SUDO_USER -c "poetry --version"
+su - $SUDO_USER -c "pip install poetry"
 
 #---------------------
 # Valkey
@@ -50,7 +53,7 @@ if [ ! -d "valkey" ]; then
     git clone https://github.com/valkey-io/valkey.git
     cd valkey
     git checkout 8.0
-    make -j 4
+    make -j4
     # Optionally, you can run the tests:
     # make test
     cd ..
@@ -103,7 +106,10 @@ cd pandora
 echo PANDORA_HOME="`pwd`" >> .env
 
 su - $SUDO_USER -c "cd ~/pandora; poetry install"
+su - $SUDO_USER -c "cd ~/pandora; echo PANDORA_HOME=\"`pwd`\" >> .env"
 su - $SUDO_USER -c "cd ~/pandora; cp config/generic.json.sample config/generic.json"
+
+#  don't forget to change storage_db_hostname in config/generic.json. It should be "kvrocks"
 
 # Copy default config file
 su - $SUDO_USER -c "cp ~/pandora/config/logging.json.sample ~/pandora/config/logging.json"
@@ -163,12 +169,11 @@ echo '0 20 * * * /sbin/poweroff' >> /etc/crontab
 #---------------------
 cd /home/$SUDO_USER/pandora-box
 
-# FIM, pmount, psmisc (for killall), vim and pipx
+# FIM, pmount, psmisc (for killall) and vim
 apt --fix-broken install -y
 apt install -y fim pmount psmisc vim
 
 # Python libraries
-su - $SUDO_USER -c "python -m venv /home/$SUDO_USER/.local"
 su - $SUDO_USER -c "./.local/bin/pip install pypandora psutil pyudev"
 
 # create /media/box folder

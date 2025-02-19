@@ -70,7 +70,7 @@ if [ ! -d "kvrocks" ]; then
     git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
     cd kvrocks
     git checkout 2.10
-    ./x.py build -j 4
+    ./x.py
     cd ..
     chown -R $SUDO_USER kvrocks
 fi
@@ -106,7 +106,6 @@ cd pandora
 echo PANDORA_HOME="`pwd`" >> .env
 
 su - $SUDO_USER -c "cd ~/pandora; poetry install"
-su - $SUDO_USER -c "cd ~/pandora; echo PANDORA_HOME=\"`pwd`\" >> .env"
 su - $SUDO_USER -c "cd ~/pandora; cp config/generic.json.sample config/generic.json"
 
 #  don't forget to change storage_db_hostname in config/generic.json. It should be "kvrocks"

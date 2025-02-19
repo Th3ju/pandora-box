@@ -4,7 +4,7 @@ Pandora-BOX
 Host
 ----
 
-CORE i5 - 4G RAM - 30G disk
+CORE i5 - 8G RAM - 30G disk
 
 Installation
 ------------

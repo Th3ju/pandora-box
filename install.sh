@@ -168,9 +168,8 @@ apt --fix-broken install -y
 apt install -y fim pmount psmisc vim
 
 # Python libraries
-su - $SUDO_USER -c "python3 -m venv /home/$SUDO_USER/python"
-su - $SUDO_USER -c "python3/bin/pip install pypandora psutil pyudev"
-
+su - $SUDO_USER -c "python -m venv /home/$SUDO_USER/python"
+su - $SUDO_USER -c "python/bin/pip install pypandora psutil pyudev"
 
 # create /media/box folder
 if [ ! -d "/media/box" ];
@@ -246,7 +245,6 @@ echo "ExecStart=-/sbin/agetty --autologin pandora --noclear %I $TERM" >> /etc/sy
 
 # Start pandora from bashrc
 echo "PATH=\"\$HOME/python/bin:\$PATH\"" >> /home/$SUDO_USER/.profile
-#echo "exec python3 pandora-box/pandora-box.py" >> /home/$SUDO_USER/.bashrc
 
 # Copy ini file
 su - $SUDO_USER -c "cp ~/pandora-box/pandora-box.ini.curses ~/pandora-box/pandora-box.ini"

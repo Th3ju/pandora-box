@@ -70,7 +70,7 @@ if [ ! -d "kvrocks" ]; then
     git clone --recursive https://github.com/apache/incubator-kvrocks.git kvrocks
     cd kvrocks
     git checkout 2.10
-    ./x.py build
+    ./x.py build -j 4
     cd ..
     chown -R $SUDO_USER kvrocks
 fi

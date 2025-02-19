@@ -171,7 +171,7 @@ cd /home/$SUDO_USER/pandora-box
 
 # FIM, pmount, psmisc (for killall) and vim
 apt --fix-broken install -y
-apt install -y fim pmount psmisc vim
+apt install -y fim python3-venv pmount psmisc vim
 
 # Python libraries
 su - $SUDO_USER -c "./.local/bin/pip install pypandora psutil pyudev"

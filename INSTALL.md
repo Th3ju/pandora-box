@@ -15,11 +15,9 @@ during the installation, select (x) Ubuntu Server (minimized)
 
 Choose to "install OpenSSH server"
 
-Create an intial user called *pandora*
-
 That's all, no other packages needed
 
-After reboot, login with the user *pandora* created during the install and type :
+After reboot, login and type :
 
     sudo apt install -y git
     git clone https://github.com/dbarzin/pandora-box

@@ -9,7 +9,7 @@ CORE i5 - 8G RAM - 30G disk
 Installation
 ------------
 
-Install [Ubuntu 22.04 server LTS](https://ubuntu.com/download/server)
+Install [Ubuntu 22.04.1 server LTS](https://ubuntu.com/download/server)
 
 during the installation, select (x) Ubuntu Server (minimized)
 

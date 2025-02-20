@@ -170,7 +170,7 @@ cd /home/$SUDO_USER/pandora-box
 
 # FIM, pmount, psmisc (for killall) and vim
 apt --fix-broken install -y
-apt install -y fim python3-venv pmount psmisc vim
+apt install -y fim pmount psmisc vim
 
 # Python libraries
 su - $SUDO_USER -c "./.local/bin/pip install pypandora psutil pyudev"
@@ -237,18 +237,20 @@ sed -i "s/_USER_/$SUDO_USER/g" /etc/systemd/system/pandora.service
 systemctl daemon-reload
 systemctl enable pandora
 
-# Do not print messages on console
-echo "mesg n" >> /home/$SUDO_USER/.bashrc
-
-# Start Pandora-box on getty1 at boot
+# Autologin user on getty1 at boot
 mkdir -p /etc/systemd/system/getty@tty1.service.d
 echo "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf
 echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-echo "ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
-echo "ExecStart=-su - $SUDO_USER -c ./pandora-box/pandora-box.py" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo "ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I \$TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
 
 # Copy ini file
 su - $SUDO_USER -c "cp ~/pandora-box/pandora-box.ini.curses ~/pandora-box/pandora-box.ini"
+
+# Do not print messages on console
+echo "mesg n" >> /home/$SUDO_USER/.bashrc
+
+# Exec pandora at login
+echo "exec pandora-box/pandora-box.py" >> /home/$SUDO_USER/.bashrc
 
 # Reboot
 echo "You may reboot the server."

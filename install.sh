@@ -253,5 +253,11 @@ echo "mesg n" >> /home/$SUDO_USER/.bashrc
 # Exec pandora at login
 echo "exec pandora-box/pandora-box.py" >> /home/$SUDO_USER/.bashrc
 
+# Config Pandora-Box:
+echo "Configuring Pandora-Box file."
+cp pandora-box.ini.ubuntu pandora-box.ini
+
+
+
 # Reboot
 echo "You may reboot the server."
